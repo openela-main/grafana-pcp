@@ -16,7 +16,7 @@ end}
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -130,7 +130,7 @@ bpftrace scripts from pmdabpftrace(1), as well as several dashboards.
 %setup -q -T -D -b 2
 %endif
 
-%patch1 -p1
+%patch -P 1 -p1
 
 
 %build
@@ -190,6 +190,10 @@ yarn test
 
 
 %changelog
+* Thu Mar 21 2024 Sam Feifer <sfeifer@redhat.com> 5.1.1-2
+- Rebuild with latest version of golang
+- resolves CVE-CVE-2024-1394
+
 * Thu Oct 27 2022 Andreas Gerstmayr <agerstmayr@redhat.com> 5.1.1-1
 - update to 5.1.1 tagged upstream community sources, see CHANGELOG
 - resolve CVE-2022-27664 golang: net/http: handle server errors after sending GOAWAY
