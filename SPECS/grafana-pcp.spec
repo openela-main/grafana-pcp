@@ -190,9 +190,8 @@ yarn test
 
 
 %changelog
-* Thu Mar 21 2024 Sam Feifer <sfeifer@redhat.com> 5.1.1-2
-- Rebuild with latest version of golang
-- resolves CVE-CVE-2024-1394
+* Tue Apr 16 2024 Sam Feifer <sfeifer@redhat.com> 5.1.1-2
+- fix CVE-2024-1394
 
 * Thu Oct 27 2022 Andreas Gerstmayr <agerstmayr@redhat.com> 5.1.1-1
 - update to 5.1.1 tagged upstream community sources, see CHANGELOG
