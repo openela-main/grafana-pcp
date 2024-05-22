@@ -193,9 +193,8 @@ yarn test
 
 
 %changelog
-* Wed Mar 27 2024 Sam Feifer <sfeifer@redhat.com> 5.1.1-2
-- resolves RHEL-30544
-- fix CVE-2024-1394 golang-fips/openssl: Memory leaks in code
+* Tue Apr 16 2024 Sam Feifer <sfeifer@redhat.com> 5.1.1-2
+- fix CVE-2024-1394
 
 * Thu Apr 20 2023 Stan Cox <scox@redhat.com> 5.1.1-1
 - update to 5.1.1 tagged upstream community sources, see CHANGELOG
