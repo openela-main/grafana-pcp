@@ -16,20 +16,20 @@ end}
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        2%{?dist}
+Release:        8%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
 
 Source0:        https://github.com/performancecopilot/grafana-pcp/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        grafana-pcp-vendor-%{version}-1.tar.xz
+Source1:        grafana-pcp-vendor-%{version}-8.tar.xz
 # Note: In case there were no changes to this tarball, the NVR of this tarball
 # lags behind the NVR of this package.
 %if %{compile_frontend} == 0
 # Source2 contains the precompiled frontend and dashboards
 # Note: In case there were no changes to this tarball, the NVR of this tarball
 # lags behind the NVR of this package.
-Source2:        grafana-pcp-webpack-%{version}-1.tar.gz
+Source2:        grafana-pcp-webpack-%{version}-8.tar.gz
 %endif
 Source3:        create_bundles.sh
 Source4:        build_frontend.sh
@@ -37,6 +37,7 @@ Source5:        list_bundled_nodejs_packages.py
 Source6:        create_bundles_in_container.sh
 
 Patch1:         0001-remove-unused-frontend-crypto.patch
+Patch2:         0002-add-uwsgi-dashboard.patch
 
 # Intersection of go_arches and nodejs_arches
 ExclusiveArch: %{grafanapcp_arches}
@@ -134,7 +135,7 @@ bpftrace scripts from pmdabpftrace(1), as well as several dashboards.
 %endif
 
 %patch -P 1 -p1
-
+%patch -P 2 -p1
 
 %build
 # Build frontend data sources
@@ -193,6 +194,9 @@ yarn test
 
 
 %changelog
+* Mon Jul 8 2024 Sam Feifer <sfeifer@redhat.com> - 5.1.1-8
+- Add a premade uwsgi dashboard for the vector datasource
+
 * Tue Apr 16 2024 Sam Feifer <sfeifer@redhat.com> 5.1.1-2
 - fix CVE-2024-1394
 

@@ -26,6 +26,9 @@ go mod vendor
 awk '$2 ~ /^v/ && $4 != "indirect" {print "Provides: bundled(golang(" $1 ")) = " substr($2, 2)}' go.mod | \
     sed -E 's/=(.*)-(.*)-(.*)/=\1-\2.\3/g' > "../${VENDOR_TAR}.manifest"
 
+# patch in uwsgi dashboard before webpack compilation
+patch -p1 --fuzz=0 < ../0002-add-uwsgi-dashboard.patch
+
 # Vendor Node.js dependencies
 patch -p1 --fuzz=0 < ../0001-remove-unused-frontend-crypto.patch
 yarn install --frozen-lockfile

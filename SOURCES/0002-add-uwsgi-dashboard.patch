@@ -1,0 +1,197 @@
+From e27f6d2954201734d30713a870d279de87fadd2d Mon Sep 17 00:00:00 2001
+From: Sam Feifer <sfeifer@redhat.com>
+Date: Tue, 2 Jul 2024 12:01:39 -0400
+Subject: [PATCH] uwsgi dashboard patch
+
+---
+ .../pcp-vector-uwsgi-overview.jsonnet         | 160 ++++++++++++++++++
+ src/datasources/vector/plugin.json            |   5 +
+ 2 files changed, 165 insertions(+)
+ create mode 100644 src/datasources/vector/dashboards/pcp-vector-uwsgi-overview.jsonnet
+
+diff --git a/src/datasources/vector/dashboards/pcp-vector-uwsgi-overview.jsonnet b/src/datasources/vector/dashboards/pcp-vector-uwsgi-overview.jsonnet
+new file mode 100644
+index 0000000..2c9d2a4
+--- /dev/null
++++ b/src/datasources/vector/dashboards/pcp-vector-uwsgi-overview.jsonnet
+@@ -0,0 +1,160 @@
++local grafana = import 'grafonnet/grafana.libsonnet';
++
++grafana.dashboard.new(
++  'PCP Vector: UWSGI Overview',
++  tags=['pcp-vector', 'uwsgi'],
++  time_from='now-5m',
++  time_to='now',
++  refresh='5s',
++)
++.addTemplate(
++  grafana.template.datasource(
++    'datasource',
++    'performancecopilot-vector-datasource',
++    'PCP Vector',
++  )
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Total Worker Count',
++    datasource='$datasource',
++    decimals=0,
++    min=0
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_workers', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 0,
++    y: 0,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Pause Worker Count',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_pause_worker_count', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 12,
++    y: 0,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Idle Worker Count',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_idle_worker_count', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 0,
++    y: 8,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Busy Worker Count',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_busy_worker_count', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 12,
++    y: 8,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Harakiri Count',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_harakiri_count', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 0,
++    y: 16,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Total Exceptions',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_exceptions', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 12,
++    y: 16,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Total Workers Acceptions Requests',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_workers_accepting_requests', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 0,
++    y: 24,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Total Requests Served',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.total_requests_served', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 12,
++    y: 24,
++    w: 12,
++    h: 8,
++  }
++)
++.addPanel(
++  grafana.graphPanel.new(
++    'Average Response Time (msec)',
++    datasource='$datasource',
++    decimals=0,
++    min=0,
++  )
++  .addTargets([
++    { expr: 'uwsgi.summary.avg_response_time_msec', format: 'time_series', legendFormat: '$metric' },
++  ]), gridPos={
++    x: 0,
++    y: 32,
++    w: 12,
++    h: 8,
++  }
++)
+\ No newline at end of file
+diff --git a/src/datasources/vector/plugin.json b/src/datasources/vector/plugin.json
+index a28e3f4..277c8c9 100644
+--- a/src/datasources/vector/plugin.json
++++ b/src/datasources/vector/plugin.json
+@@ -45,6 +45,11 @@
+             "type": "dashboard",
+             "name": "PCP Vector: Microsoft SQL Server",
+             "path": "dashboards/pcp-vector-mssql-server.json"
++        },
++        {
++            "type": "dashboard",
++            "name": "PCP Vector: UWSGI Overview",
++            "path": "dashboards/pcp-vector-uwsgi-overview.json"
+         }
+     ]
+ }
+-- 
+2.45.2
+
