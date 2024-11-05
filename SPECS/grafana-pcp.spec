@@ -16,7 +16,7 @@ end}
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -194,6 +194,9 @@ yarn test
 
 
 %changelog
+* Thu Oct 10 2024 Sam Feifer <sfeifer@redhat.com> - 5.1.1-9
+- Resolves RHEL-61780: CVE-2024-9355
+
 * Mon Jul 8 2024 Sam Feifer <sfeifer@redhat.com> - 5.1.1-8
 - Add a premade uwsgi dashboard for the vector datasource
 
