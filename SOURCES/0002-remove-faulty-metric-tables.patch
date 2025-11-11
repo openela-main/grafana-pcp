@@ -1,3 +1,9 @@
+From e3abd89f08e1e7f37184f9ce7ebe6f1d99ff2bbd Mon Sep 17 00:00:00 2001
+From: Sam Feifer <sfeifer@redhat.com>
+Date: Mon, 7 Jul 2025 10:16:54 -0400
+Subject: [PATCH] remove faulty metrics table
+
+
 diff --git a/src/datasources/vector/dashboards/pcp-vector-top-consumers.jsonnet b/src/datasources/vector/dashboards/pcp-vector-top-consumers.jsonnet
 index cef1a0e..c9f9f5d 100644
 --- a/src/datasources/vector/dashboards/pcp-vector-top-consumers.jsonnet

@@ -19,6 +19,8 @@ tar xf "${SOURCE_TAR}"
 ## Create vendor bundle
 pushd "${SOURCE_DIR}"
 
+patch -p1 --fuzz=0 < ../0003-fix-create_bundles-issue.patch
+
 # Vendor Go dependencies
 go mod vendor
 
