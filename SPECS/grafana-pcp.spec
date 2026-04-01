@@ -16,7 +16,7 @@ end}
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -191,6 +191,9 @@ yarn test
 
 
 %changelog
+* Tue Mar 31 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-13
+- Resolves RHEL-158731: CVE-2026-25679
+
 * Wed Feb 18 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-12
 - Resolves RHEL-146864: CVE-2025-61726
 - Resolves RHEL-147082: CVE-2025-61729
