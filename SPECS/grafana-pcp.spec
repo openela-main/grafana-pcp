@@ -16,7 +16,7 @@ end}
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -191,17 +191,19 @@ yarn test
 
 
 %changelog
-* Wed Apr 22 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-14
-- Resolves RHEL-166656: CVE-2026-32282
-- Resolves RHEL-167661: CVE-2026-32283
+* Wed Apr 22 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-15
+- Resolves RHEL-166679: CVE-2026-32282
+- Resolves RHEL-167679: CVE-2026-32283
 
-* Tue Mar 31 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-13
-- Resolves RHEL-158731: CVE-2026-25679
+* Wed Apr 1 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-14
+- Resolves RHEL-158769: CVE-2026-25679
 
-* Wed Feb 18 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-12
-- Resolves RHEL-146864: CVE-2025-61726
-- Resolves RHEL-147082: CVE-2025-61729
-- Resolves RHEL-149622: CVE-2025-68121
+* Tue Feb 17 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-13
+- Resolves RHEL-146104: CVE-2025-61726
+- Resolves RHEL-149640: CVE-2025-68121
+
+* Mon Jan 26 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-12
+- Resolves RHEL-140550: CVE-2025-61729
 
 * Tue Jun 10 2025 Sam Feifer <sfeifer@redhat.com> - 5.1.1-11
 - Resolves RHEL-89310: CVE-2025-22871
