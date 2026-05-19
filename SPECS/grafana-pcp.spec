@@ -198,17 +198,15 @@ yarn test
 
 
 %changelog
-* Wed Apr 22 2026 Sam Feifer <sfeifer@redhat.com> - 5.3.0-4
-- Resolves RHEL-166433: CVE-2026-32282
-- Resolves RHEL-167474: CVE-2026-32283
+* Wed Apr 1 2026 Sam Feifer <sfeifer@redhat.com> - 5.3.0-4
+- Resolves RHEL-158485: CVE-2026-25679
 
-* Tue Mar 31 2026 Sam Feifer <sfeifer@redhat.org> - 5.3.0-3
-- Resolves RHEL-158459: CVE-2026-25679
+* Tue Feb 17 2026 Sam Feifer <sfeifer@redhat.com> - 5.3.0-3
+- Resolves RHEL-146074: CVE-2025-61726
+- Resolves RHEL-149247: CVE-2025-68121
 
-* Tue Feb 17 2026 Sam Feifer <sfeifer@redhat.org> - 5.3.0-2
-- Resolves RHEL-146722: CVE-2025-61726
-- Resolves RHEL-146927: CVE-2025-61729
-- Resolves RHEL-149228: CVE-2025-68121
+* Mon Jan 26 2026 Sam Feifer <sfeifer@redhat.com> - 5.3.0-2
+- RHEL-140517: CVE-2025-61729
 
 * Tue Jul 8 2025 Sam Feifer <sfeifer@redhat.org> - 5.3.0-1
 - update to 5.3.0 tagged upstream sources, see CHANGELOG
