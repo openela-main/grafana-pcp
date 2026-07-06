@@ -2,34 +2,26 @@
 # is attached as a webpack tarball (in case of an unsuitable nodejs version on the build system)
 %define compile_frontend 0
 
-%global grafanapcp_arches %{lua: go_arches = {}
-  for arch in rpm.expand("%{go_arches}"):gmatch("%S+") do
-    go_arches[arch] = 1
-  end
-  for arch in rpm.expand("%{nodejs_arches}"):gmatch("%S+") do
-    if go_arches[arch] then
-      print(arch .. " ")
-  end
-end}
+%global grafanapcp_arches %{go_arches}
 
 %global gomodulesmode GO111MODULE=auto
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        15%{?dist}
+Release:        17%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
 
 Source0:        https://github.com/performancecopilot/grafana-pcp/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        grafana-pcp-vendor-%{version}-8.tar.xz
+Source1:        grafana-pcp-vendor-%{version}-16.tar.xz
 # Note: In case there were no changes to this tarball, the NVR of this tarball
 # lags behind the NVR of this package.
 %if %{compile_frontend} == 0
 # Source2 contains the precompiled frontend and dashboards
 # Note: In case there were no changes to this tarball, the NVR of this tarball
 # lags behind the NVR of this package.
-Source2:        grafana-pcp-webpack-%{version}-8.tar.gz
+Source2:        grafana-pcp-webpack-%{version}-16.tar.gz
 %endif
 Source3:        create_bundles.sh
 Source4:        build_frontend.sh
@@ -38,6 +30,10 @@ Source6:        create_bundles_in_container.sh
 
 Patch1:         0001-remove-unused-frontend-crypto.patch
 Patch2:         0002-add-uwsgi-dashboard.patch
+Patch3:         0003-fix-x-net-CVE.patch
+
+# Patches affecting the vendor tarball
+Patch1001:      1001-vendor-fix-idna-unicode-version-gate.patch
 
 # Intersection of go_arches and nodejs_arches
 ExclusiveArch:  %{grafanapcp_arches}
@@ -133,6 +129,9 @@ bpftrace scripts from pmdabpftrace(1), as well as several dashboards.
 
 %patch -P 1 -p1
 %patch -P 2 -p1
+%patch -P 3 -p1
+
+%patch -P 1001 -p1
 
 %build
 # Build frontend data sources
@@ -191,6 +190,13 @@ yarn test
 
 
 %changelog
+* Thu Jul 02 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-17
+- Resolves RHEL-183820: CVE-2026-39821
+- Resolves RHEL-188285
+
+* Tue Jun 23 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-16
+- Resolves RHEL-183820: CVE-2026-39821
+
 * Wed Apr 22 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-15
 - Resolves RHEL-166679: CVE-2026-32282
 - Resolves RHEL-167679: CVE-2026-32283
