@@ -19,6 +19,9 @@ tar xf "${SOURCE_TAR}"
 ## Create vendor bundle
 pushd "${SOURCE_DIR}"
 
+# Apply x/net CVE fix before vendoring
+patch -p1 --fuzz=0 < ../0003-fix-x-net-CVE.patch
+
 # Vendor Go dependencies
 go mod vendor
 
@@ -31,7 +34,7 @@ patch -p1 --fuzz=0 < ../0002-add-uwsgi-dashboard.patch
 
 # Vendor Node.js dependencies
 patch -p1 --fuzz=0 < ../0001-remove-unused-frontend-crypto.patch
-yarn install --frozen-lockfile
+yarn install --frozen-lockfile --ignore-engines
 
 # Remove files with licensing issues
 find . -type d -name 'node-notifier' -prune -exec rm -r {} \;
