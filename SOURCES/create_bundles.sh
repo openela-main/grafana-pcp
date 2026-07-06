@@ -20,6 +20,7 @@ tar xf "${SOURCE_TAR}"
 pushd "${SOURCE_DIR}"
 
 patch -p1 --fuzz=0 < ../0003-fix-create_bundles-issue.patch
+patch -p1 --fuzz=0 < ../0004-fix-x-net-CVE.patch
 
 # Vendor Go dependencies
 go mod vendor
@@ -33,7 +34,7 @@ patch -p1 --fuzz=0 < ../0002-remove-faulty-metric-tables.patch
 
 # Vendor Node.js dependencies
 patch -p1 --fuzz=0 < ../0001-remove-unused-frontend-crypto.patch
-yarn install --frozen-lockfile
+yarn install --frozen-lockfile --ignore-engines
 
 # Remove files with licensing issues
 find . -type d -name 'node-notifier' -prune -exec rm -r {} \;
