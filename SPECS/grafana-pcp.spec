@@ -2,21 +2,13 @@
 # is attached as a webpack tarball (in case of an unsuitable nodejs version on the build system)
 %define compile_frontend 0
 
-%global grafanapcp_arches %{lua: go_arches = {}
-  for arch in rpm.expand("%{go_arches}"):gmatch("%S+") do
-    go_arches[arch] = 1
-  end
-  for arch in rpm.expand("%{nodejs_arches}"):gmatch("%S+") do
-    if go_arches[arch] then
-      print(arch .. " ")
-  end
-end}
+%global grafanapcp_arches %{go_arches}
 
 %global gomodulesmode GO111MODULE=auto
 
 Name:           grafana-pcp
 Version:        5.3.0
-Release:        7%{?dist}
+Release:        8%{?dist}.1
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        Apache-2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -205,6 +197,13 @@ yarn test
 
 
 %changelog
+* Wed Sep 02 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.3.0-8.1
+- Rebuilt for updated golang
+- Resolves RHEL-241480, RHEL-251115, RHEL-242257, RHEL-242154, RHEL-241751
+
+* Wed Jul 22 2026 Sam Feifer <sfeifer@redhat.com> - 5.3.0-8
+- Resolves RHEL-188287: Remove Lua ExclusiveArch macro for Konflux build
+
 * Wed Jul 01 2026 Sam Feifer <sfeifer@redhat.com> - 5.3.0-7
 - Resolves RHEL-183688: CVE-2026-39821
 
