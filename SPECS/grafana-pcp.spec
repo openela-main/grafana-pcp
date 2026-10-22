@@ -8,7 +8,7 @@
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        17%{?dist}.1
+Release:        17%{?dist}.2
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -190,6 +190,12 @@ yarn test
 
 
 %changelog
+* Wed Oct 21 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-17.2
+- Rebuild against updated golang
+- Resolves RHEL-287511
+- Resolves RHEL-279381
+- Resolves RHEL-278739
+
 * Wed Sep 02 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-17.1
 - Rebuild against updated golang
 - Resolves RHEL-241464
