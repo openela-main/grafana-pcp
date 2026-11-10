@@ -19,9 +19,6 @@ tar xf "${SOURCE_TAR}"
 ## Create vendor bundle
 pushd "${SOURCE_DIR}"
 
-patch -p1 --fuzz=0 < ../0003-fix-create_bundles-issue.patch
-patch -p1 --fuzz=0 < ../0004-fix-x-net-CVE.patch
-
 # Vendor Go dependencies
 go mod vendor
 
@@ -30,11 +27,10 @@ awk '$2 ~ /^v/ && $4 != "indirect" {print "Provides: bundled(golang(" $1 ")) = "
     sed -E 's/=(.*)-(.*)-(.*)/=\1-\2.\3/g' > "../${VENDOR_TAR}.manifest"
 
 # patch the top consumers dashboard to remove tables visualizing faulty metrics
-patch -p1 --fuzz=0 < ../0002-remove-faulty-metric-tables.patch
+patch -p1 --fuzz=0 < ../0001-remove-faulty-metrics-table.patch
 
 # Vendor Node.js dependencies
-patch -p1 --fuzz=0 < ../0001-remove-unused-frontend-crypto.patch
-yarn install --frozen-lockfile --ignore-engines
+yarn install --frozen-lockfile
 
 # Remove files with licensing issues
 find . -type d -name 'node-notifier' -prune -exec rm -r {} \;

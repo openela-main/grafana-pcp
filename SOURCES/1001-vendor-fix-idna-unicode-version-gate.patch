@@ -1,3 +1,7 @@
+From 74531f22b85ead64b87e1c900b42fd67dd03fc87 Mon Sep 17 00:00:00 2001
+From: Sam Feifer <sfeifer@redhat.com>
+Date: Mon, 7 Jul 2025 10:16:54 -0400
+
 diff --git a/vendor/golang.org/x/net/idna/idna.go b/vendor/golang.org/x/net/idna/idna.go
 --- a/vendor/golang.org/x/net/idna/idna.go
 +++ b/vendor/golang.org/x/net/idna/idna.go

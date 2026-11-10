@@ -17,6 +17,15 @@ def read_declared_pkgs(package_json_path):
 def read_installed_pkgs(yarn_lock_path):
     with open(yarn_lock_path) as f:
         lockfile = f.read()
+        # Yarn 4.x (Berry) format: version: 1.2.3 (no quotes)
+        berry_format = re.findall(r'^"?'  # can start with a "
+                                  r'(.+?)@.+(?:,.*)?:\n'  # characters up to @
+                                  r'  version: (.+)',  # version: 1.2.3 (colon, no quotes)
+                                  lockfile, re.MULTILINE)
+        if berry_format:
+            return berry_format
+
+        # Yarn 1.x (classic) format: version "1.2.3" (quoted)
         return re.findall(r'^"?'  # can start with a "
                           r'(.+?)@.+(?:,.*)?:\n'  # characters up to @
                           r'  version "(.+)"',  # and the version
