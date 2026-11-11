@@ -1,0 +1,33 @@
+From 3822494d8ea03b992c089fd2a195f041762fffb7 Mon Sep 17 00:00:00 2001
+From: eshitachandwani <59800922+eshitachandwani@users.noreply.github.com>
+Date: Tue, 25 Aug 2026 19:10:26 +0530
+Subject: [PATCH] cherry-pick #9365 to v1.82.x (#9367)
+
+Original PR : https://github.com/grpc/grpc-go/pull/9365
+
+RELEASE NOTES:
+- server: Reject requests missing both :authority and Host headers with
+HTTP 400 and status Internal
+
+Co-authored-by: Madan Kumar <winklemad@outlook.com>
+---
+ vendor/google.golang.org/grpc/internal/transport/http2_server.go | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/vendor/google.golang.org/grpc/internal/transport/http2_server.go b/vendor/google.golang.org/grpc/internal/transport/http2_server.go
+index be8ae9f9..8e9cbd37 100644
+--- a/vendor/google.golang.org/grpc/internal/transport/http2_server.go
++++ b/vendor/google.golang.org/grpc/internal/transport/http2_server.go
+@@ -522,6 +522,12 @@ func (t *http2Server) operateHeaders(ctx context.Context, frame *http2.MetaHeade
+ 		delete(mdata, "host")
+ 	}
+ 
++	// If :authority is still missing, i.e. no host or :authority header is
++	// present, reject the request as invalid.
++	if len(mdata[":authority"]) == 0 {
++		t.writeEarlyAbort(streamID, s.contentSubtype, status.New(codes.Internal, "no host or :authority header present"), http.StatusBadRequest, !frame.StreamEnded())
++		return nil
++	}
+ 	if frame.StreamEnded() {
+ 		// s is just created by the caller. No lock needed.
+ 		s.state = streamReadDone

@@ -28,6 +28,7 @@ awk '$2 ~ /^v/ && $4 != "indirect" {print "Provides: bundled(golang(" $1 ")) = "
 
 # patch the top consumers dashboard to remove tables visualizing faulty metrics
 patch -p1 --fuzz=0 < ../0001-remove-faulty-metrics-table.patch
+patch -p1 --fuzz=0 < ../0002-vllm-dashboard-updates.patch
 
 # Vendor Node.js dependencies
 yarn install --frozen-lockfile

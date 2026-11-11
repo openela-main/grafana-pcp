@@ -8,20 +8,20 @@
 
 Name:           grafana-pcp
 Version:        6.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}.3
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        Apache-2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
 
 Source0:        https://github.com/performancecopilot/grafana-pcp/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:        grafana-pcp-vendor-%{version}-1.tar.xz
+Source1:        grafana-pcp-vendor-%{version}-2.tar.xz
 # Note: In case there were no changes to this tarball, the NVR of this tarball
 # lags behind the NVR of this package.
 %if %{compile_frontend} == 0
 # Source2 contains the precompiled frontend and dashboards
 # Note: In case there were no changes to this tarball, the NVR of this tarball
 # lags behind the NVR of this package.
-Source2:        grafana-pcp-webpack-%{version}-1.tar.gz
+Source2:        grafana-pcp-webpack-%{version}-2.tar.gz
 %endif
 Source3:        create_bundles.sh
 Source4:        build_frontend.sh
@@ -33,9 +33,16 @@ ExcludeArch: %{ix86}
 %endif
 
 Patch1:         0001-remove-faulty-metrics-table.patch
+Patch2:         0002-vllm-dashboard-updates.patch
 
 # Patches affecting the vendor tarball
 Patch1001:      1001-vendor-fix-idna-unicode-version-gate.patch
+# https://issues.redhat.com/browse/RHEL-262079
+# https://github.com/grpc/grpc-go/commit/3822494d8ea03b992c089fd2a195f041762fffb7
+Patch1002:      1002-vendor-fix-grpc-missing-authority-header.patch
+# https://issues.redhat.com/browse/RHEL-298670
+# https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d
+Patch1003:      1003-vendor-fix-klauspost-compress-count-overflow.patch
 
 # Intersection of go_arches and nodejs_arches
 ExclusiveArch:  %{grafanapcp_arches}
@@ -180,8 +187,13 @@ bpftrace scripts from pmdabpftrace(1), as well as several dashboards.
 %endif
 
 %patch -P 1 -p1
+%patch -P 2 -p1
 
 %patch -P 1001 -p1
+
+%patch -P 1002 -p1
+
+%patch -P 1003 -p1
 
 %build
 # Build frontend data sources
@@ -240,6 +252,24 @@ yarn test
 
 
 %changelog
+* Sun Nov 01 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 6.1.0-2.3
+- CVE-2026-116591 grafana-pcp: klauspost/compress: Denial of Service via crafted zstd compressed input
+
+* Wed Oct 21 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 6.1.0-2.2
+- Rebuild against updated golang
+
+* Mon Oct 19 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 6.1.0-2.1
+- Rebuild against updated golang
+
+* Fri Oct 09 2026 Lauren Chilton <lchilton@redhat.com> - 6.1.0-2
+- Update sources and tarballs for patch application
+
+* Wed Sep 23 2026 Lauren Chilton <lchilton@redhat.com> - 6.1.0-1.2
+- Update vllm dashboard
+
+* Thu Sep 17 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 6.1.0-1.1
+- Resolves RHEL-262079: CVE-2026-84445
+
 * Tue Aug 18 2026 Lauren Chilton <lchilton@redhat.com> - 6.1.0-1
 - Resolves RHEL-243641: Rebase to upstream version v6.1.0
 
