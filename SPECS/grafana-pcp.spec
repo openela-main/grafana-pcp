@@ -8,7 +8,7 @@
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -34,6 +34,8 @@ Patch3:         0003-fix-x-net-CVE.patch
 
 # Patches affecting the vendor tarball
 Patch1001:      1001-vendor-fix-idna-unicode-version-gate.patch
+# https://github.com/klauspost/compress/commit/7f5d8528720c895a6106f201719f87eb030a565d
+Patch1002:      1002-vendor-fix-klauspost-compress-CVE-2026-116591.patch
 
 # Intersection of go_arches and nodejs_arches
 ExclusiveArch: %{grafanapcp_arches}
@@ -135,6 +137,7 @@ bpftrace scripts from pmdabpftrace(1), as well as several dashboards.
 %patch -P 3 -p1
 
 %patch -P 1001 -p1
+%patch -P 1002 -p1
 
 %build
 # Build frontend data sources
@@ -193,6 +196,10 @@ yarn test
 
 
 %changelog
+* Sun Nov 01 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-20
+- CVE-2026-116591 grafana-pcp: klauspost/compress: Denial of Service via crafted zstd compressed input
+- Resolves RHEL-298346
+
 * Wed Oct 21 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-19
 - Rebuild against updated golang
 - Resolves RHEL-287631
