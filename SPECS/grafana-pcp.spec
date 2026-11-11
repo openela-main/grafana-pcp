@@ -8,7 +8,7 @@
 
 Name:           grafana-pcp
 Version:        5.1.1
-Release:        17%{?dist}.2
+Release:        17%{?dist}.3
 Summary:        Performance Co-Pilot Grafana Plugin
 License:        ASL 2.0
 URL:            https://github.com/performancecopilot/grafana-pcp
@@ -190,32 +190,31 @@ yarn test
 
 
 %changelog
+* Thu Oct 22 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-17.3
+- Rebuild against updated golang
+- Resolves: RHEL-285431
+
 * Wed Oct 21 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-17.2
 - Rebuild against updated golang
-- Resolves RHEL-287511
-- Resolves RHEL-279381
-- Resolves RHEL-278739
+- Resolves: RHEL-287517
 
-* Wed Sep 02 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-17.1
+* Fri Oct 16 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 5.1.1-17.1
 - Rebuild against updated golang
-- Resolves RHEL-241464
-- Resolves RHEL-242181
-- Resolves RHEL-241794
-- Resolves RHEL-241448
+- Resolves: RHEL-286378, RHEL-242227, RHEL-242156,
+  RHEL-241748, RHEL-241660, RHEL-241241
 
-* Thu Jul 02 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-17
-- Resolves RHEL-183820: CVE-2026-39821
-- Resolves RHEL-188285
-
-* Tue Jun 23 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-16
-- Resolves RHEL-183820: CVE-2026-39821
+* Thu Jul 09 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-17
+- Resolves RHEL-183831: CVE-2026-39821
+- Resolves RHEL-188286: Remove Lua ExclusiveArch macro
 
 * Wed Apr 22 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-15
-- Resolves RHEL-166679: CVE-2026-32282
-- Resolves RHEL-167679: CVE-2026-32283
+- Resolves RHEL-166347: CVE-2026-33810
+- Resolves RHEL-166704: CVE-2026-32282
+- Resolves RHEL-167391: CVE-2026-32280
+- Resolves RHEL-167697: CVE-2026-32283
 
 * Wed Apr 1 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-14
-- Resolves RHEL-158769: CVE-2026-25679
+- Resolves RHEL-156659: CVE-2026-25679
 
 * Tue Feb 17 2026 Sam Feifer <sfeifer@redhat.com> - 5.1.1-13
 - Resolves RHEL-146104: CVE-2025-61726
